@@ -109,7 +109,7 @@ body {
 .registration.active {
   opacity: 1;
   pointer-events: auto;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(10px);
 }
 .registration__name {
   display: flex;

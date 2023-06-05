@@ -4,6 +4,12 @@
   border: 0;
 }
 
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 :focus, :active {
   outline: none;
 }
@@ -64,4 +70,4 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: inherit;
 }
 
-/*# sourceMappingURL=nulling.css.map */
+/*# sourceMappingURL=nullin.css.map */
