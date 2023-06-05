@@ -3,6 +3,7 @@
   <component name="ProjectTasksOptions">
     <enabled-global>
       <option value="SCSS" />
+      <option value="autoprefixer" />
     </enabled-global>
   </component>
 </project>
