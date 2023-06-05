@@ -33,10 +33,12 @@ io.sockets.on('connection', function(socket) {
     });
 
     // Функция получающая сообщение от какого-либо пользователя
-    socket.on('send msg', function(data) {
+    socket.on('send message', function(data) {
         // Внутри функции мы передаем событие 'add msg',
         // которое будет вызвано у всех пользователей и у них добавиться новое сообщение
-        io.sockets.emit('add msg', {msg: data.msg, name: data.username});
+        io.sockets.emit('add message', {message: data.message, name: data.name});
     });
 
 });
+
+

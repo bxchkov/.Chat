@@ -283,7 +283,6 @@ body {
 .chat__title {
   font-size: 36px;
   letter-spacing: 1px;
-  transition: font-size 0.3s ease;
 }
 @media (max-width: 1023px) {
   .chat__title {
