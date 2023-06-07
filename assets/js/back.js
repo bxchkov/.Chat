@@ -26,7 +26,6 @@ messageField.addEventListener("keyup", e=> {
 const sendMessage = () => {
     if (messageField.value !== '' && sendButton.classList.contains('active')){
         // В сокет отсылаем новое событие 'send message',
-        // в событие передаем различные параметры и данные
         socket.emit('send message', {message: messageField.value, name: username.value});
         // Очищаем поле с сообщением
         messageField.value = '';
@@ -38,7 +37,6 @@ const sendMessage = () => {
 // которое должно приходить из сокета в случае добавления нового сообщения
 socket.on('add message', function (data) {
     // Встраиваем полученное сообщение в блок с сообщениями
-    console.log(data);
     allMessages.insertAdjacentHTML('afterbegin',
         `<div class="message">
                 <div class="message__username">
@@ -50,3 +48,4 @@ socket.on('add message', function (data) {
               </div>`
     );
 });
+
