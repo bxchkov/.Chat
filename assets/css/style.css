@@ -284,7 +284,7 @@ body {
   font-size: 36px;
   letter-spacing: 1px;
 }
-@media (max-width: 1023px) {
+@media (max-width: 1000px) {
   .chat__title {
     font-size: 30px;
   }
@@ -296,7 +296,7 @@ body {
 }
 @media (max-width: 500px) {
   .chat__title {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 @media (max-width: 400px) {
@@ -330,29 +330,51 @@ body {
 }
 
 .message {
+  font-size: 16px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
   gap: 5px;
   -ms-flex-pack: center;
-      justify-content: center;
+  justify-content: center;
   background-color: #2d2d2e;
   color: white;
+  padding: 1.2vh;
   border-radius: 5px;
-  padding: 15px;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   width: calc(100% - 5px);
   line-height: 100%;
-  animation: creating 0.5s forwards;
+  animation: creating 0.4s none;
+}
+@media (max-width: 1000px) {
+  .message {
+    font-size: 15px;
+  }
+}
+@media (max-width: 800px) {
+  .message {
+    font-size: 14px;
+  }
+}
+@media (max-width: 500px) {
+  .message {
+    font-size: 14px;
+    gap: 3px;
+  }
+}
+@media (max-width: 400px) {
+  .message {
+    font-size: 13px;
+  }
 }
 .message__username {
   font-weight: bold;
   white-space: nowrap;
-  animation: creating1 0.5s forwards;
+  animation: creating1 0.4s forwards;
 }
 .message__text {
   word-wrap: anywhere;
@@ -362,24 +384,24 @@ body {
   line-height: 1.5;
   min-width: -moz-min-content;
   min-width: min-content;
-  animation: creating2 0.5s forwards;
+  animation: creating2 0.4s forwards;
 }
 
 @keyframes creating {
   0% {
-    padding: 0 15px;
+    padding: 0 1.3vh;
     background-color: orange;
     color: white;
   }
   100% {
-    padding: 15px;
+    padding: 1.3vh;
   }
 }
 @keyframes creating1 {
   0% {
     opacity: 0;
   }
-  60% {
+  50% {
     opacity: 0;
   }
   100% {
@@ -390,7 +412,7 @@ body {
   0% {
     opacity: 0;
   }
-  60% {
+  50% {
     opacity: 0;
   }
   100% {

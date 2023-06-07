@@ -19,7 +19,6 @@ app.get('/', function(request, response) {
 connections = [];
 
 // Функция, которая сработает при подключении к странице
-// Считается как новый пользователь
 io.sockets.on('connection', function(socket) {
     console.log("Подключение");
     // Добавление нового соединения в массив

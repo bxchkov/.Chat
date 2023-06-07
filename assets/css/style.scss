@@ -212,7 +212,7 @@ body {
     font-size: 36px;
     letter-spacing: 1px;
 
-    @media (max-width: 1023px) {
+    @media (max-width: 1000px) {
       font-size: 30px;
     }
 
@@ -221,7 +221,7 @@ body {
     }
 
     @media (max-width: 500px) {
-      font-size: 20px;
+      font-size: 18px;
     }
 
     @media (max-width: 400px) {
@@ -253,30 +253,38 @@ body {
 }
 
 .message {
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   justify-content: center;
   background-color: #2d2d2e;
   color: white;
+  padding: 1.3vh;
   border-radius: 5px;
-  padding: 15px;
   user-select: none;
-  //cursor: pointer;
   width: calc(100% - 5px);
   line-height: 100%;
-  animation: creating .5s forwards;
-  //transition: all .3s ease;
+  animation: creating .4s none;
 
-  //&:hover {
-  //  background-color: orange;
-  //  color: black;
-  //}
+  @media (max-width: 1000px) {
+    font-size: 15px;
+  }
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
+  @media (max-width: 500px) {
+    font-size: 14px;
+    gap: 3px;
+  }
+  @media (max-width: 400px) {
+    font-size: 13px;
+  }
 
   &__username {
     font-weight: bold;
     white-space: nowrap;
-    animation: creating1 .5s forwards;
+    animation: creating1 .4s forwards;
   }
 
   &__text {
@@ -286,7 +294,7 @@ body {
     hyphens: auto;
     line-height: 1.5;
     min-width: min-content;
-    animation: creating2 .5s forwards;
+    animation: creating2 .4s forwards;
 
     //&:hover {
     //  background-color: brown;
@@ -296,15 +304,12 @@ body {
 
 @keyframes creating {
   0% {
-    padding: 0 15px;
+    padding: 0 1.3vh;
     background-color: orange;
     color: white;
-
   }
   100% {
-    padding: 15px;
-    //background-color: orange;
-    //color: white;
+    padding: 1.3vh;
   }
 }
 
@@ -312,7 +317,7 @@ body {
   0% {
     opacity: 0;
   }
-  60% {
+  50% {
     opacity: 0;
   }
   100%{
@@ -324,7 +329,7 @@ body {
   0% {
     opacity: 0;
   }
-  60% {
+  50% {
     opacity: 0;
   }
   100%{
