@@ -3,13 +3,14 @@ let chatHeight = document.querySelector('.chat__messages');
 let chatHeaderHeight = document.querySelector('.chat__header').offsetHeight;
 let messageFieldHeight = document.querySelector('.message-input').offsetHeight;
 let headerHeight = document.querySelector('.header').offsetHeight;
-window.addEventListener('resize', () => {
-    resizer();
-});
+
 const resizer = () => {
     document.body.style.height = window.innerHeight;
     chatHeight.style.height = window.innerHeight - headerHeight - messageFieldHeight - chatHeaderHeight - 55;
 }
+window.addEventListener('resize', () => {
+    resizer();
+});
 resizer();
 
 // Вывод (сохранённого) имени
