@@ -10,8 +10,8 @@ function symbolsRange(from, to, elem) {
     return regex.test(elem);
 }
 
-function jwtTokenGetPayload(jwtToken) {
-    const tokenParts = jwtToken.split(".");
+function jwtGetPayload(token) {
+    const tokenParts = token.split(".");
     return JSON.parse(atob(tokenParts[1]));
 }
 
@@ -211,7 +211,7 @@ class ModalFormRegistration extends ModalFormAuth {
             return
         }
         const accessToken = registrationResponse.data.accessToken;
-        const tokenPayload = jwtTokenGetPayload(accessToken);
+        const tokenPayload = jwtGetPayload(accessToken);
         const userId = tokenPayload.userId;
         const userRole = tokenPayload.userRole;
         localStorage.setItem('accessToken', accessToken);
@@ -258,7 +258,7 @@ class ModalFormLogin extends ModalFormAuth {
             return
         }
         const accessToken = loginResponse.data.accessToken;
-        const tokenPayload = jwtTokenGetPayload(accessToken);
+        const tokenPayload = jwtGetPayload(accessToken);
         const userId = tokenPayload.userId;
         const userRole = tokenPayload.userRole;
         localStorage.setItem('accessToken', accessToken);
@@ -308,7 +308,7 @@ async function checkSession() {
     if (checkSessionResponse.data.accessToken) {
         console.log("Новая пара токенов");
         accessToken = checkSessionResponse.data.accessToken;
-        const tokenPayload = jwtTokenGetPayload(accessToken);
+        const tokenPayload = jwtGetPayload(accessToken);
         const userId = tokenPayload.userId;
         const userRole = tokenPayload.userRole;
         localStorage.setItem('accessToken', accessToken);
@@ -343,7 +343,7 @@ async function refreshTokens() {
     }
     console.log("Пара токенов обновлена");
     accessToken = refreshResponse.data.accessToken;
-    const tokenPayload = jwtTokenGetPayload(accessToken);
+    const tokenPayload = jwtGetPayload(accessToken);
     const userId = tokenPayload.userId;
     const userRole = tokenPayload.userRole;
     localStorage.setItem('accessToken', accessToken);

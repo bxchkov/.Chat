@@ -84,7 +84,8 @@ function generateTokens(userId, userName, userRole = 1) {
     const payload = {
         userId,
         userName,
-        userRole
+        userRole,
+        iat: Math.floor(Date.now() / 1000)
     }
     const accessToken  = jwt.sign(payload, jwtAccessSecret,  {expiresIn: "10s"}); // todo test, потом сделать 15m 30d
     const refreshToken = jwt.sign(payload, jwtRefreshSecret, {expiresIn: "30d"});
@@ -368,12 +369,6 @@ class authController {
 }
 const auth = new authController();
 
-function getJwtTokenRemainingTime(jwtToken) {
-    const decodedPayload = jwt.decode(jwtToken);
-    const tokenExpirationTime = decodedPayload.exp * 1000; // время истечения токена
-    return Math.ceil(tokenExpirationTime - (Date.now())) // время оставшееся до истечения токена в секундах
-}
-
 // Функция, которая сработает при подключении к странице
 io.sockets.on('connection', async socket => {
     async function checkSession(data) {
@@ -393,11 +388,31 @@ io.sockets.on('connection', async socket => {
     await checkSession(socket.handshake.query);
     socket.emit('refresh_tokens');
 
-    let timeToUpdate = getJwtTokenRemainingTime(socket.handshake.query.accessToken) * 0.95;
-    console.log(timeToUpdate / 1000)
-    let sessionChecker = setInterval(() => {
+    function getJwtRemainingTime(token) {
+        const decodedPayload = jwt.decode(token);
+        const tokenExpirationTime = decodedPayload.exp; // время, когда истёчёт токен
+        const currentDate = Date.now(); // текущее время
+        return Math.round(tokenExpirationTime - (currentDate / 1000)) // время оставшееся до истечения токена (секунды)
+    }
+    function getJwtLifetime(token) {
+        const decodedPayload = jwt.decode(token);
+        const tokenExpirationTime = decodedPayload.exp; // время, когда истёчёт токен
+        const tokenCreatedTime = decodedPayload.iat; // время, когда был создан токен
+        return tokenExpirationTime - tokenCreatedTime // время жизни токена (секунды)
+    }
+    let accessTokenLifetime = getJwtLifetime(socket.handshake.query.accessToken) * 0.85;
+    let accessTokenExpTime = getJwtRemainingTime(socket.handshake.query.accessToken) * 0.85;
+    console.log(`Оставшееся время жизни текущего accessToken'а - ${accessTokenExpTime} секунд`);
+    console.log(`Время текущего accessToken'а - ${accessTokenLifetime} секунд`);
+    let sessionUpdater;
+    const sessionUpdaterOnReload = setTimeout(() => {
         socket.emit('refresh_tokens');
-    }, timeToUpdate);
+        console.log(`Первичное (при подключении к сокету) обновление сессии (токенов) на основе оставшегося\nвремени accessToken'а - ${accessTokenExpTime} секунд и запуск интервального обновления`)
+        sessionUpdater = setInterval(() => {
+            console.log(`Спустя время жизни accessToken'а - ${accessTokenLifetime} секунд,\nсработал интервал обновления токенов`);
+            socket.emit('refresh_tokens');
+        }, accessTokenLifetime * 1000);
+    }, accessTokenExpTime * 1000);
 
     const [dbMessages] = await conn.promise().query(
         `SELECT * FROM Messages`
@@ -456,7 +471,8 @@ io.sockets.on('connection', async socket => {
     });
 
     socket.on('disconnect', () => {
-        clearInterval(sessionChecker);
+        clearTimeout(sessionUpdaterOnReload);
+        clearInterval(sessionUpdater);
         console.log("Отключен чел");
     });
 });
